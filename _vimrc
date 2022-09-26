@@ -22,9 +22,12 @@ let g:c_syntax_for_h=1
 
 
 " gui pythonthreedll 3.9
-" set pythonthreedll=/usr/local/Frameworks/Python.framework/Versions/3.9/Python
+if has("win32")
 " set runtimepath+=d:/youcompleteme
-set pythonthreedll=python39.dll
+    set pythonthreedll=python39.dll
+" else
+" set pythonthreedll=/usr/local/Frameworks/Python.framework/Versions/3.9/Python
+endif
 
 " Lang & Encoding {{{
 set fileencodings=utf-8,gbk2312,gbk,gb18030,cp936
@@ -143,17 +146,11 @@ let mapleader=";"
 " let g:Powerline_symbols='unicode'
 
 " new very inportant
-" set termguicolors
 let g:gruvbox_termcolors=256
 " 设置主题
 set t_Co=256
 set background=dark
-" set background=light
-" colorscheme solarized
-" colorscheme Tomorrow-Night
-" colorscheme monokai
 colorscheme gruvbox
-" colorscheme citylights
 
 " let g:molokai_original=1
 
@@ -209,8 +206,11 @@ nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 " -------- YCM 设置
 "
 " ycm配置文件
-" let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
-let g:ycm_global_ycm_extra_conf = '~/vimfiles/bundle/YouCompleteMe/.ycm_extra_conf.py'
+if has("win32")
+    let g:ycm_global_ycm_extra_conf = '~/vimfiles/bundle/YouCompleteMe/.ycm_extra_conf.py'
+else
+    let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+endif
 " 语法检查
 " let g:syntastic_always_populate_loc_list=1
 " 关闭语法检查
@@ -359,7 +359,9 @@ au GUIEnter * call WindowCenterInScreen()
 
 " gtags
 let $GTAGSLABEL = 'native-pygments'
-let $GTAGSCONF = 'D:/gtags/share/gtags/gtags.conf'
+if has("win32")
+    let $GTAGSCONF = 'D:/gtags/share/gtags/gtags.conf'
+endif
 
 " guntentags
 " Usage:
