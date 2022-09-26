@@ -48,7 +48,7 @@ if has("win32")
 else
     " let Vundle manage Vundle, required
     set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+    call vundle#begin()
 endif
 
 " Vundle 插件列表
@@ -209,7 +209,7 @@ nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 if has("win32")
     let g:ycm_global_ycm_extra_conf = '~/vimfiles/bundle/YouCompleteMe/.ycm_extra_conf.py'
 else
-    let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 endif
 " 语法检查
 " let g:syntastic_always_populate_loc_list=1
@@ -286,7 +286,7 @@ let g:ycm_filetype_whitelist = {
 
 " -------- ale configure
 let g:ale_linters = {
-\   'c++': ['clang++'],
+\   'c++': ['clang++', 'cppcheck'],
 \   'c': ['clang'],
 \   'python': ['pylint'],
 \}
@@ -298,9 +298,14 @@ let g:ale_echo_msg_format = '[%linter%] %code: %%s'
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
 
-" let g:ale_c_cc_options = '--target=x86_64-pc-windows-gnu -std=c11 -Wall'
-let g:ale_c_cc_options = '--target=x86_64-pc-windows-gnu -std=c11 -Wall -I D:/proj/rlib/inc/'
-let g:ale_cpp_cc_options = '--target=x86_64-pc-windows-gnu -std=c++17 -Wall'
+if has("win32")
+    " let g:ale_c_cc_options = '--target=x86_64-pc-windows-gnu -std=c11 -Wall'
+    let g:ale_c_cc_options = '--target=x86_64-pc-windows-gnu -std=c11 -Wall -I D:/proj/rlib/inc/'
+    let g:ale_cpp_cc_options = '--target=x86_64-pc-windows-gnu -std=c++17 -Wall'
+else
+    let g:ale_c_cc_options = '-std=c11 -Wall -I ~/Documents/rlib/inc/'
+    let g:ale_cpp_cc_options = '-std=c++17 -Wall'
+endif
 let g:ale_c_gcc_options = '-Wall -O2 -std=c11'
 let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++17'
 let g:ale_cpp_clangtidy_options = '-Wall -std=c++17 -x c++'
@@ -361,6 +366,8 @@ au GUIEnter * call WindowCenterInScreen()
 let $GTAGSLABEL = 'native-pygments'
 if has("win32")
     let $GTAGSCONF = 'D:/gtags/share/gtags/gtags.conf'
+else
+    let $GTAGSCONF = '/usr/local/share/gtags/gtags.conf'
 endif
 
 " guntentags
