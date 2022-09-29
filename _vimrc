@@ -76,6 +76,8 @@ Plugin 'skywind3000/gutentags_plus'
 
 Plugin 'rhysd/vim-clang-format'
 
+Plugin 'Shougo/vimproc.vim'
+
 call vundle#end()
 filetype plugin indent on
 
