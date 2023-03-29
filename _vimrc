@@ -53,7 +53,6 @@ endif
 
 " Vundle 插件列表
 Plugin 'VundleVim/Vundle.vim'
-" Plugin 'tomasr/molokai'
 " Plugin 'Lokaltog/vim-powerline'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
