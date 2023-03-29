@@ -54,9 +54,9 @@ endif
 " Vundle 插件列表
 Plugin 'VundleVim/Vundle.vim'
 " Plugin 'tomasr/molokai'
-Plugin 'Lokaltog/vim-powerline'
-" Plugin 'vim-airline/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'Lokaltog/vim-powerline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'derekwyatt/vim-fswitch'
@@ -209,7 +209,8 @@ nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 "
 " ycm配置文件
 if has("win32")
-    let g:ycm_global_ycm_extra_conf = '~/vimfiles/bundle/YouCompleteMe/.ycm_extra_conf.py'
+    " let g:ycm_global_ycm_extra_conf = '~/vimfiles/bundle/YouCompleteMe/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 else
     let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 endif
@@ -286,22 +287,29 @@ let g:ycm_filetype_whitelist = {
             \ "zimbu":1,
             \ }
 
-" -------- ale configure
+" -------- ale part
 let g:ale_linters = {
 \   'c++': ['clang++', 'cppcheck'],
 \   'c': ['clang'],
 \   'python': ['pylint'],
 \}
+
 " let g:ale_linters_explicit = 1
+let g:ale_sign_error = ">>"
+let g:ale_sign_warning = "--"
+let g:ale_statusline_format = ['× %d', '⚠ %d', '√ ok']
 let g:ale_completion_delay = 500
 let g:ale_echo_delay = 20
 let g:ale_lint_delay = 500
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warring_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1
 
 if has("win32")
     " let g:ale_c_cc_options = '--target=x86_64-pc-windows-gnu -std=c11 -Wall'
+    " let g:ale_c_cc_options = '--target=x86_64-pc-windows-gnu -std=c11 -Wall -I D:/proj/arm/STMLibrary/Library -I D:/proj/arm/STMLibrary/Start -I D:/proj/arm/STMLibrary/User'
     let g:ale_c_cc_options = '--target=x86_64-pc-windows-gnu -std=c11 -Wall -I D:/proj/rlib/inc/'
     let g:ale_cpp_cc_options = '--target=x86_64-pc-windows-gnu -std=c++17 -Wall'
 else
@@ -313,7 +321,15 @@ let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++17'
 let g:ale_cpp_clangtidy_options = '-Wall -std=c++17 -x c++'
 let g:ale_cpp_clangcheck_options = '-- -Wall -std=c++17 -x c++'
 
-let g:ale_sign_error = "\ue009\ue009"
+" 普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap <Leader>sp <Plug>(ale_previous_wrap)
+nmap <Leader>sn <Plug>(ale_next_wrap)
+
+"<Leader>s触发/关闭语法检查
+nmap <Leader>ss :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>sd :ALEDetail<CR>
+
 hi! clear SpellBad
 hi! clear SpellCap
 hi! clear SpellRare
@@ -331,11 +347,6 @@ let g:indentLine_enabled = 1
 set guifont=JetBrains\ Mono:h11
 " gui cursor blin 
 set gcr=a:block-blinkon0
-" if has("gui_running")
-  " GUI is running or is about to start.
-  " Maximize gvim window.
-  " set lines=128 columns=100
-" endif
 
 " syntax 卡顿
 set re=1
@@ -474,3 +485,8 @@ autocmd FileType c,cpp,objc vnoremap <buffer><Leader>kf :ClangFormat<CR>
 " autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
 nmap <Leader>C :ClangFormatAutoToggle<CR>
+
+" --- airline part
+let g:airline#extensions#tabline#enabled = 1                " 设置开启tab样式
+let g:airline#extensions#tabline#formatter = 'jsformatter'  " 设置默认tab栏样式
+let g:airline_theme = 'onedark'
