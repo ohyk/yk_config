@@ -487,5 +487,6 @@ nmap <Leader>C :ClangFormatAutoToggle<CR>
 
 " --- airline part
 let g:airline#extensions#tabline#enabled = 1                " 设置开启tab样式
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#formatter = 'jsformatter'  " 设置默认tab栏样式
 let g:airline_theme = 'onedark'
